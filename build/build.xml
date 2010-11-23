@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="kiss-metrics" basedir="../" default="compile">
+
+    <property environment="env" />
+    <fail unless="env.FLEX_HOME" message="FLEX_HOME needs to be defined as an environment variable or in the Ant build." />
+
+    <!-- Configuration -->
+    <property file="${basedir}/build/build.properties" />
+
+    <!-- Setup Flex Ant Resources -->
+    <property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+    <property name="flexlib" location="${FLEX_HOME}/frameworks/libs"/>
+    <taskdef resource="flexTasks.tasks" 
+             classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+
+    <!-- ============================== -->
+    <!-- Clean and Init Targets -->
+    <!-- ============================== -->
+
+    <target name="clean" description="Removes artifacts from previous builds">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${bin.dir}" defaultexcludes="false">
+                <include name="**/*" />
+            </fileset>
+            <fileset dir="${docs.dir}" defaultexcludes="false">
+                <include name="**/*" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="init" description="Initializes project and destination folders">
+        <echo message="Project: ${ant.project.name}" />
+        <echo message="Flex SDK: ${FLEX_HOME}" />
+
+        <!-- Create direectories -->
+        <mkdir dir="${bin.dir}" />
+        <mkdir dir="${docs.dir}" />
+    </target>
+
+    <!-- ======================================= -->
+    <!-- Compile and Document -->
+    <!-- ======================================= -->
+
+    <target name="compile" 
+            depends="init" 
+            description="Compile the library .swc file">
+
+        <compc output="${bin.dir}/${library.name}.swc"
+               debug="false" optimize="true">
+
+            <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml" />
+            <external-library-path file="${flexlib}/framework.swc" append="true"/>
+            <external-library-path file="${flexlib}/flex.swc" append="true"/>
+            <external-library-path file="${flexlib}/spark.swc" append="true"/>
+            <external-library-path file="${flexlib}/sparkskins.swc" append="true"/>
+            <external-library-path file="${flexlib}/rpc.swc" append="true"/>
+            <source-path path-element="${src.dir}" />
+            <include-sources dir="${src.dir}" includes="*" />
+
+        </compc>
+
+        <echo message="${flexlib}/framework.swc"/>
+    </target>
+
+    <target name="docs" depends="init" 
+            description="Generate ASDoc documentation">
+
+        <java jar="${FLEX_HOME}/lib/asdoc.jar"
+              dir="${FLEX_HOME}/frameworks" fork="true" failonerror="true">
+
+            <arg line="-load-config '${FLEX_HOME}/frameworks/flex-config.xml'" />
+
+            <!-- Place the documentation in the "docs" directory -->
+            <arg line="-output ${docs.dir}" />
+
+            <!-- Specify the main source path as "src" -->
+            <arg line="-source-path ${src.dir}" />
+
+            <!-- Document all of the classes in the "src" tree -->
+            <arg line="-doc-sources ${src.dir} " />
+
+            <!-- Include the library name in the window title -->
+            <arg line="-window-title 'Tribal Crossing ActionScript 3.0 KISS Metrics Library - ${library.name}' "/>
+
+        </java>
+
+        <echo message="Documentation has been created in ${docs.dir}" />
+    </target>
+
+</project>

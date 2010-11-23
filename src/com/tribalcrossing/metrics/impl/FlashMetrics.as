@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010 Tribal Crossing. All Rights Reserved
+ * Copyright (c) 2010 Tribal Crossing. Some Rights Reserved
  *
  * Licensed under the CREATIVE COMMONS Attribution-Share Alike 3.0
  * You may not use this file except in compliance with the License.
@@ -12,6 +12,9 @@ package com.tribalcrossing.metrics.impl
     import com.tribalcrossing.services.RestCall;
     import com.tribalcrossing.services.RestCallQueue;
     
+    import flash.net.URLRequest;
+    import flash.net.URLRequestMethod;
+
     /**
      * A simple class for making KISS API calls. 
      * This implementation is intended to be used in Flash projects
@@ -79,7 +82,7 @@ package com.tribalcrossing.metrics.impl
         private function getRequest( path:String ) : RestCall
         {            
             // construct a URLRequest for making the call
-            var request:RestCall = new RestCall();            
+            var request:RestCall = new RestCall();
             return request.get( KISS_URL + path );
         }
     }    

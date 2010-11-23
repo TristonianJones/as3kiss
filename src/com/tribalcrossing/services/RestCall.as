@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010 Tribal Crossing. All Rights Reserved
+ * Copyright (c) 2010 Tribal Crossing. Some Rights Reserved
  *
  * Licensed under the CREATIVE COMMONS Attribution-Share Alike 3.0
  * You may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ package com.tribalcrossing.services
             this._request = null;
             this._result = null;
             this._fault = null;
+            this._pages = null;
             this._dataFormat = null;
             
             var finished:Function = _complete;

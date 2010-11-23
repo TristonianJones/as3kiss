@@ -30,7 +30,6 @@ package com.tribalcrossing.services
         private var _result:Function;
         private var _fault:Function;
         private var _loader:URLLoader;
-        private var _pages:Array = [];
         private var _dataFormat:String = URLLoaderDataFormat.TEXT;
         private var _complete:Function;
         

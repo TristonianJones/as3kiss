@@ -62,7 +62,6 @@ package com.tribalcrossing.services
             this._request = null;
             this._result = null;
             this._fault = null;
-            this._pages = null;
             this._dataFormat = null;
             
             var finished:Function = _complete;
